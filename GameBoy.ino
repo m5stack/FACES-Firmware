@@ -1,4 +1,7 @@
 #include <Wire.h>
+
+#define FACES_KEYBOARD_I2C_ADDR 0x08
+
 #define Set_Bit(val, bitn)    (val |=(1<<(bitn)))
 #define Clr_Bit(val, bitn)     (val&=~(1<<(bitn)))
 #define Get_Bit(val, bitn)    (val &(1<<(bitn)) )
@@ -17,7 +20,7 @@ void setup()
   DDRB = 0x00;
   PORTB = 0xff;
   oldPINB=PINB;
-  Wire.begin(0x88);
+  Wire.begin(FACES_KEYBOARD_I2C_ADDR);
   Wire.onRequest(requestEvent);
 }
 unsigned char i = 0;
@@ -26,7 +29,7 @@ void requestEvent()
 {
   Wire.write(PINB);
   if (hadPressed == 1)
-  {    
+  {
     hadPressed = 0;
     IRQ_1;
   }
@@ -43,7 +46,7 @@ void loop()
   }
   /*
   if (PINB != 0xff)
-  {    
+  {
     switch(PINB)
     {
       case 0xFE:temp='U';while(PINB!=0xff)delay(1);IRQ_0;hadPressed = 1;break;
@@ -54,8 +57,7 @@ void loop()
       case 0xDF:temp='B';while(PINB!=0xff)delay(1);IRQ_0;hadPressed = 1;break;
       case 0xBF:temp='s';while(PINB!=0xff)delay(1);IRQ_0;hadPressed = 1;break;
       case 0x7F:temp='S';while(PINB!=0xff)delay(1);IRQ_0;hadPressed = 1;break;
-    }    
+    }
   }*/
   delay(10);
 }
-

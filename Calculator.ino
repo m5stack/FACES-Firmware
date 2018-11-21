@@ -1,5 +1,7 @@
 #include <Wire.h>
 
+#define FACES_KEYBOARD_I2C_ADDR 0x08
+
 #define Set_Bit(val, bitn)    (val |=(1<<(bitn)))
 #define Clr_Bit(val, bitn)     (val&=~(1<<(bitn)))
 #define Get_Bit(val, bitn)    (val &(1<<(bitn)) )
@@ -26,7 +28,7 @@ void setup()
   PORTC = 0xff;
   DDRD = 0xff;
   PORTD = 0x00;
-  Wire.begin(0x88);
+  Wire.begin(FACES_KEYBOARD_I2C_ADDR);
   Wire.onRequest(requestEvent);
 }
 
@@ -142,4 +144,3 @@ void loop()
   }
   delay(10);
 }
-
